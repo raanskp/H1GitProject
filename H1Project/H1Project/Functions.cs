@@ -96,14 +96,20 @@ namespace H1Project
 				case "DeleteConversation":
 					//DeleteConversation();
 					break;
+				case "PrintConversation":
+					printConversation("conversationName");
+					break;
 				case "StartConversation":
-					//StartConversation();
+					StartConversation("conversationName");
 					break;
 				case "EndConversation":
-					//EndConversation();
+					EndConversation("conversationName");
 					break;
 				case "SaveConversation":
-					//SaveConversation();
+					SaveConversation("conversationName", "file.txt");
+					break;
+				case "SwitchConversation":
+					SwitchConversation("conversationName");
 					break;
 				case "Start":
 					Start();
