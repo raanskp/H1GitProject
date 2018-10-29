@@ -15,20 +15,11 @@ namespace H1Project
 			while (true)
 			{
                 Console.WriteLine("Hello and welcome to this chat bot.");
-                Console.WriteLine("If you would like to chat, type Y for yes, and N for no");
+                Console.WriteLine("If you would like to chat, type Start");
 
                 string userValue = Console.ReadLine();
-
-                if (userValue.ToLower() == "Y")
-                {
-
-                }
-
-                if (userValue.ToLower() == "N")
-                {
-
-                }
-                functions.HandleCommands("input");
+				
+                functions.HandleCommands(userValue);
 			}
         }
     }
