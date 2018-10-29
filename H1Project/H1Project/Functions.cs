@@ -8,7 +8,7 @@ namespace H1Project
 {
 	public class Functions
 	{
-		private List<Message> currentConversation;
+        private string currentConversation;
         private Dictionary<string, List<Message>> allConversations = new Dictionary<string, List<Message>>();
 		
 		/// <summary>
@@ -71,7 +71,7 @@ namespace H1Project
             // Create a new conversation, add it to the conversation list and set it active
             List<Message> conversation = new List<Message>();
             allConversations.Add(conversationName, conversation);
-            currentConversation = conversation;
+            currentConversation = conversationName;
 
             printConversation(conversationName);
         }
@@ -98,7 +98,7 @@ namespace H1Project
             if (conversation != null)
             {
                 // Set the current conversation and print it to the screen
-                currentConversation = conversation;
+                currentConversation = conversationName;
                 printConversation(conversationName);
             }
         }
