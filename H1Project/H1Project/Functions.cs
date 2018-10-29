@@ -17,7 +17,13 @@ namespace H1Project
         /// <param name="conversationName">The name of the conversation which we wish to end.</param>
         private void EndConversation(string conversationName)
         {
-            
+            List<Message> conversation = allConversations[conversationName];
+
+            // We cannot end a non-existant conversation
+            if ( conversation != null )
+            {
+
+            }
         }
 		
 		/// <summary>
@@ -29,11 +35,12 @@ namespace H1Project
             List<Message> conversation = allConversations[conversationName];
 
             // Make sure that the conversation name is actually valid
-            if ( conversation != null )
+            if (conversation != null)
             {
-                foreach (Message message in conversation ) 
+
+                foreach (Message message in conversation) 
                 {
-                    if ( message.wasRecieved())
+                    if (message.wasRecieved())
                     {
                         // Commented until layout function is implemented
                         //printRecievedMessage(message.getMessage());
@@ -55,7 +62,7 @@ namespace H1Project
         private void StartConversation(string conversationName)
         {
             // Test if it is a pre-existing conversation and switch to it if it is
-            if ( allConversations.ContainsKey(conversationName) )
+            if (allConversations.ContainsKey(conversationName))
             {
                 SwitchConversation(conversationName);
                 return;
@@ -69,14 +76,31 @@ namespace H1Project
             printConversation(conversationName);
         }
 		
+        /// <summary>
+        /// Stores the given conversation to a file.
+        /// </summary>
+        /// <param name="conversationName">The name of the conversation to save.</param>
+        /// <param name="filename">The filename to save the conversation to.</param>
 		private void SaveConversation(string conversationName, string filename)
         {
 
         }
 
+        /// <summary>
+        /// Changes the current conversation to the conversation given by conversationName.
+        /// </summary>
+        /// <param name="conversationName">The name of the conversation to switch to.</param>
         private void SwitchConversation(string conversationName)
         {
+            List<Message> conversation = allConversations[conversationName];
 
+            // We can only switch to conversations that exist.
+            if (conversation != null)
+            {
+                // Set the current conversation and print it to the screen
+                currentConversation = conversation;
+                printConversation(conversationName);
+            }
         }
 		public void Quit()
 		{
