@@ -31,7 +31,7 @@ namespace H1Project
             // Make sure that the conversation name is actually valid
             if ( conversation != null )
             {
-                foreach ( Message message in conversation ) 
+                foreach (Message message in conversation ) 
                 {
                     if ( message.wasRecieved())
                     {
@@ -45,17 +45,7 @@ namespace H1Project
                     }
                 }
             }
-        }
-		
-		public void Quit()
-		{
-
-		}
-
-		public void Start()
-		{
-
-		}
+        }		
 		
 		/// <summary>
         /// This function starts a conversation by creating a new List<Message> to contain all the messages sent/recieved.
@@ -88,5 +78,38 @@ namespace H1Project
         {
 
         }
+	}
+
+	public void Quit()
+	{
+		Environment.Exit(0);
+	}
+
+	public void Start()
+	{
+		//Eventuelt redundant
+	}
+
+	public void HandleCommands(string input)
+	{
+		//Eventuelt input.Split(' ');
+		switch (input)
+		{
+			case "DeleteConversation":
+				//DeleteConversation();
+				break;
+			case "StartConversation":
+				//StartConversation();
+				break;
+			case "EndConversation":
+				//EndConversation();
+				break;
+			case "SaveConversation":
+				//SaveConversation();
+				break;
+			default:
+				//SmallTalk();
+				break;
+		}
 	}
 }
