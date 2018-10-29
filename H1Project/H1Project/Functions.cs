@@ -97,7 +97,7 @@ namespace H1Project
             if (conversation != null)
             {
                 // Set the current conversation and print it to the screen
-                currentConversation = conversation;
+                currentConversation = conversationName;
                 PrintConversation(conversationName);
             }
         }
