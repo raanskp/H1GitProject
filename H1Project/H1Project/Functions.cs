@@ -30,14 +30,13 @@ namespace H1Project
         /// Prints a conversation to the console.
         /// </summary>
         /// <param name="conversationName">The name of the conversation to print.</param>
-        private void printConversation(string conversationName)
+        private void PrintConversation(string conversationName)
         {
             List<Message> conversation = allConversations[conversationName];
 
             // Make sure that the conversation name is actually valid
             if (conversation != null)
             {
-
                 foreach (Message message in conversation) 
                 {
                     if (message.wasRecieved())
@@ -73,7 +72,7 @@ namespace H1Project
             allConversations.Add(conversationName, conversation);
             currentConversation = conversation;
 
-            printConversation(conversationName);
+            PrintConversation(conversationName);
         }
 		
         /// <summary>
@@ -99,7 +98,7 @@ namespace H1Project
             {
                 // Set the current conversation and print it to the screen
                 currentConversation = conversation;
-                printConversation(conversationName);
+                PrintConversation(conversationName);
             }
         }
 
@@ -122,7 +121,7 @@ namespace H1Project
 					//DeleteConversation();
 					break;
 				case "PrintConversation":
-					printConversation("conversationName");
+					PrintConversation("conversationName");
 					break;
 				case "StartConversation":
 					StartConversation("conversationName");
