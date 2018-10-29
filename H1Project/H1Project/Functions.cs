@@ -20,7 +20,7 @@ namespace H1Project
             List<Message> conversation = allConversations[conversationName];
 
             // We cannot end a non-existant conversation
-            if ( conversation != null )
+            if (conversation != null)
             {
 
             }
@@ -102,12 +102,13 @@ namespace H1Project
                 printConversation(conversationName);
             }
         }
-		public void Quit()
+
+		private void Quit()
 		{
 			Environment.Exit(0);
 		}
 
-		public void Start()
+		private void Start()
 		{
 			//Eventuelt redundant
 		}
