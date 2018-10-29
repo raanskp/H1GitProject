@@ -20,6 +20,7 @@ namespace H1Project
             List<Message> conversation = allConversations[conversationName];
 
             // We cannot end a non-existant conversation
+			// This can be simplified if the if-statement is only going to hold 1 statement
             if (conversation != null)
             {
 
@@ -102,6 +103,9 @@ namespace H1Project
             }
         }
 
+		/// <summary>
+		/// Quits the console application.
+		/// </summary>
 		private void Quit()
 		{
 			Environment.Exit(0);
@@ -109,7 +113,7 @@ namespace H1Project
 
 		private void Start()
 		{
-			//Eventuelt redundant
+			// Introduction to the bot, functionality, commands, experience. - Probably redundant.
 		}
 
 		public void HandleCommands(string input)
