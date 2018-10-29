@@ -78,38 +78,43 @@ namespace H1Project
         {
 
         }
-	}
-
-	public void Quit()
-	{
-		Environment.Exit(0);
-	}
-
-	public void Start()
-	{
-		//Eventuelt redundant
-	}
-
-	public void HandleCommands(string input)
-	{
-		//Eventuelt input.Split(' ');
-		switch (input)
+		public void Quit()
 		{
-			case "DeleteConversation":
-				//DeleteConversation();
-				break;
-			case "StartConversation":
-				//StartConversation();
-				break;
-			case "EndConversation":
-				//EndConversation();
-				break;
-			case "SaveConversation":
-				//SaveConversation();
-				break;
-			default:
-				//SmallTalk();
-				break;
+			Environment.Exit(0);
 		}
-	}
+
+		public void Start()
+		{
+			//Eventuelt redundant
+		}
+
+		public void HandleCommands(string input)
+		{
+			//Eventuelt input.Split(' ');
+			switch (input)
+			{
+				case "DeleteConversation":
+					//DeleteConversation();
+					break;
+				case "StartConversation":
+					//StartConversation();
+					break;
+				case "EndConversation":
+					//EndConversation();
+					break;
+				case "SaveConversation":
+					//SaveConversation();
+					break;
+				case "Start":
+					Start();
+					break;
+				case "Quit":
+					Quit();
+					break;
+				default:
+					//SmallTalk();
+					break;
+			}
+		}
+	}	
 }
