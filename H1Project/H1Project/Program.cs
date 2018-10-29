@@ -10,6 +10,13 @@ namespace H1Project
     {
         static void Main(string[] args)
         {
+			Functions functions = new Functions();
+
+			while (true)
+			{
+				//Input
+				functions.HandleCommands("input");
+			}
         }
     }
 }
