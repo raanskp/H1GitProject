@@ -10,7 +10,6 @@ namespace H1Project
     {
         static void Main(string[] args)
         {
-            
         }
     }
 }
