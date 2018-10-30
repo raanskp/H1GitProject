@@ -64,6 +64,18 @@ namespace H1Project
             }
         }		
 		
+        /// <summary>
+        /// Fetches the list of messages that is the current conversation.
+        /// </summary>
+        /// <returns>A list that is the current conversation or null if there is no active conversation</returns>
+        private List<Message> GetCurrentConversation()
+        {
+            if (currentConversation == null)
+                return null;
+            else
+                return allConversations[currentConversation];
+        }
+
 		/// <summary>
         /// This function starts a conversation by creating a new List<Message> to contain all the messages sent/recieved.
         /// If a conversation already exists, it will switch to that conversation instead. 
