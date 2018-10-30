@@ -119,6 +119,7 @@ namespace H1Project
 		/// </summary>
 		private void Quit()
 		{
+            Console.WriteLine("Have a nice day");
 			Environment.Exit(0);
 		}
 
