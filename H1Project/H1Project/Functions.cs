@@ -132,9 +132,6 @@ namespace H1Project
                 Console.WriteLine("That conversation does not exist");
                 return;
             }
-			
-	        // Variable Never Used
-            List<Message> conversation = allConversations[conversationName];
 
             // Set the current conversation and print it to the screen
             currentConversation = conversationName;
