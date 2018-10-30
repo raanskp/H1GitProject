@@ -86,7 +86,7 @@ namespace H1Project
             List<Message> conversation = new List<Message>();
             allConversations.Add(conversationName, conversation);
             currentConversation = conversationName;
-
+            conversationHistory.Add(currentConversation);
             PrintConversation(conversationName);
         }
 		
@@ -139,6 +139,7 @@ namespace H1Project
 
             // Set the current conversation and print it to the screen
             currentConversation = conversationName;
+            conversationHistory.Add(currentConversation);
             PrintConversation(conversationName);
         }
 
