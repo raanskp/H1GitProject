@@ -209,7 +209,7 @@ namespace H1Project
 						Quit();
 						break;
 					default:
-						//SmallTalk();
+						SmallTalk();
 						break;
 				}
 			}
@@ -218,5 +218,10 @@ namespace H1Project
 				Console.WriteLine(e);
 			}
 		}
-	}	
+
+        private void SmallTalk()
+        {
+            throw new NotImplementedException();
+        }
+    }	
 }
