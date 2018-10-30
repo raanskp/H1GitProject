@@ -17,12 +17,12 @@ namespace H1Project
             this.isRecieved = isRecieved;
         }
 
-        public string getMessage()
+        public string GetMessage()
         {
             return message;
         }
 
-        public bool wasRecieved()
+        public bool WasRecieved()
         {
             return isRecieved;
         }

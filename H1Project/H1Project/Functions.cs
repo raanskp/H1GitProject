@@ -10,20 +10,31 @@ namespace H1Project
 	{
         private string currentConversation;
         private Dictionary<string, List<Message>> allConversations = new Dictionary<string, List<Message>>();
-		
-		/// <summary>
+        private List<string> conversationHistory = new List<string>();
+
+        /// <summary>
         /// Ends a conversation by removing the reference to it in the allConversations list. 
         /// </summary>
         /// <param name="conversationName">The name of the conversation which we wish to end.</param>
         private void EndConversation(string conversationName)
         {
-            List<Message> conversation = allConversations[conversationName];
-
             // We cannot end a non-existant conversation
-			// This can be simplified if the if-statement is only going to hold 1 statement
-            if (conversation != null)
-            {
+            if (allConversations[conversationName] == null)
+                return;
 
+            conversationHistory.Remove(currentConversation);
+            {
+                // If we previously switched from a conversation to this one, we can switch back
+                if ( conversationHistory.Count > 0 )
+                {
+                    currentConversation = conversationHistory[conversationHistory.Count - 1];
+                }
+                else
+                {
+                    // TODO? Should we handle this differently?
+                    // There are no more conversations to switch to. 
+                    Console.WriteLine("No more conversations");
+                }
             }
         }
 		
@@ -40,7 +51,7 @@ namespace H1Project
             {
                 foreach (Message message in conversation) 
                 {
-                    if (message.wasRecieved())
+                    if (message.WasRecieved())
                     {
                         // Commented until layout function is implemented
                         //printRecievedMessage(message.getMessage());
