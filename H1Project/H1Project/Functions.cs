@@ -24,7 +24,7 @@ namespace H1Project
 
             conversationHistory.Remove(currentConversation);
             // If we previously switched from a conversation to this one, we can switch back
-            if ( conversationHistory.Count > 0 )
+            if (conversationHistory.Count > 0)
             {
                 currentConversation = conversationHistory[conversationHistory.Count - 1];
             }
@@ -145,9 +145,11 @@ namespace H1Project
 			Environment.Exit(0);
 		}
 
+		/// <summary>
+		/// Introduction to the bot, functionality, commands, experience. - Probably redundant.
+		/// </summary>
 		private void Start()
 		{
-            // Introduction to the bot, functionality, commands, experience. - Probably redundant.
             Console.WriteLine("Contents of BotSvar.txt =");
             foreach (string line in System.IO.File.ReadAllLines(@"BotSvar.txt"))
             {
@@ -155,28 +157,33 @@ namespace H1Project
             }
         }
 
+		/// <summary>
+		/// Receives the input of the user, and chooses which method to use, based on the userinput provided.
+		/// </summary>
+		/// <param name="input"></param>
 		public void HandleCommands(string input)
 		{
+			string[] a = input.ToLower().Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries);
 			//Eventuelt input.Split(' ');
-			switch (input.ToLower().Split(new []{" "}, StringSplitOptions.RemoveEmptyEntries)[0])
+			switch (a[0])
 			{
 				case "deleteconversation":
 					//DeleteConversation();
 					break;
 				case "printconversation":
-					PrintConversation("conversationName");
+					PrintConversation(a[0]);
 					break;
 				case "startconversation":
-					StartConversation("conversationName");
+					StartConversation(a[0]);
 					break;
 				case "endconversation":
-					EndConversation("conversationName");
+					EndConversation(a[0]);
 					break;
 				case "saveconversation":
-					SaveConversation("conversationName", "file.txt");
+					SaveConversation(a[0], $"{a[1]}.txt");
 					break;
 				case "switchconversation":
-					SwitchConversation("conversationName");
+					SwitchConversation(a[0]);
 					break;
 				case "start":
 					Start();
