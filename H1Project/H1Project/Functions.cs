@@ -173,21 +173,36 @@ namespace H1Project
 						//DeleteConversation();
 						break;
 					case "printconversation":
-						PrintConversation(a[0]);
+                        if ( a.Length >= 2 )
+						    PrintConversation(a[1]);
+                        else
+                            Console.WriteLine("Printconversation <conversation name>");
 						break;
 					case "startconversation":
-						StartConversation(a[0]);
+                        if (a.Length >= 2)
+                            StartConversation(a[1]);
+                        else
+                            Console.WriteLine("StartConversation <conversation name>");
 						break;
 					case "endconversation":
-						EndConversation(a[0]);
+                        if (a.Length >= 2)
+                            EndConversation(a[1]);
+                        else
+                            Console.WriteLine("EndConversation <conversation name>");
 						break;
 					case "saveconversation":
-						SaveConversation(a[0], $"{a[1]}.txt");
-						break;
+                        if (a.Length >= 3)
+                            SaveConversation(a[1], $"{a[2]}.txt");
+                        else
+                            Console.WriteLine("SaveConversation <conversation name> <filename>");
+                        break;
 					case "switchconversation":
-						SwitchConversation(a[0]);
-						break;
-					case "start":
+                        if (a.Length >= 3)
+                            SwitchConversation(a[1]);
+                        else
+                            Console.WriteLine("switchconversation <conversation name>");
+                        break;
+                    case "start":
 						Start();
 						break;
 					case "quit":
