@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace H1Project
 {
@@ -132,9 +129,6 @@ namespace H1Project
                 Console.WriteLine("That conversation does not exist");
                 return;
             }
-			
-	        // Variable Never Used
-            List<Message> conversation = allConversations[conversationName];
 
             // Set the current conversation and print it to the screen
             currentConversation = conversationName;
@@ -154,9 +148,8 @@ namespace H1Project
 		private void Start()
 		{
             // Introduction to the bot, functionality, commands, experience. - Probably redundant.
-            string[] lines = System.IO.File.ReadAllLines(@"BotSvar.txt");
             Console.WriteLine("Contents of BotSvar.txt =");
-            foreach (string line in lines)
+            foreach (string line in System.IO.File.ReadAllLines(@"BotSvar.txt"))
             {
                 Console.WriteLine("\t" + line);
             }
@@ -165,30 +158,30 @@ namespace H1Project
 		public void HandleCommands(string input)
 		{
 			//Eventuelt input.Split(' ');
-			switch (input)
+			switch (input.ToLower().Split(new []{" "}, StringSplitOptions.RemoveEmptyEntries)[0])
 			{
-				case "DeleteConversation":
+				case "deleteconversation":
 					//DeleteConversation();
 					break;
-				case "PrintConversation":
+				case "printconversation":
 					PrintConversation("conversationName");
 					break;
-				case "StartConversation":
+				case "startconversation":
 					StartConversation("conversationName");
 					break;
-				case "EndConversation":
+				case "endconversation":
 					EndConversation("conversationName");
 					break;
-				case "SaveConversation":
+				case "saveconversation":
 					SaveConversation("conversationName", "file.txt");
 					break;
-				case "SwitchConversation":
+				case "switchconversation":
 					SwitchConversation("conversationName");
 					break;
-				case "Start":
+				case "start":
 					Start();
 					break;
-				case "Quit":
+				case "quit":
 					Quit();
 					break;
 				default:
