@@ -18,23 +18,24 @@ namespace H1Project
         /// <param name="conversationName">The name of the conversation which we wish to end.</param>
         private void EndConversation(string conversationName)
         {
-            // We cannot end a non-existant conversation
-            if (allConversations[conversationName] == null)
+            // Test if the conversation exists
+            if (!allConversations.ContainsKey(conversationName))
+            {
+                Console.WriteLine("That conversation does not exist");
                 return;
+            }
 
             conversationHistory.Remove(currentConversation);
+            // If we previously switched from a conversation to this one, we can switch back
+            if ( conversationHistory.Count > 0 )
             {
-                // If we previously switched from a conversation to this one, we can switch back
-                if ( conversationHistory.Count > 0 )
-                {
-                    currentConversation = conversationHistory[conversationHistory.Count - 1];
-                }
-                else
-                {
-                    // TODO? Should we handle this differently?
-                    // There are no more conversations to switch to. 
-                    Console.WriteLine("No more conversations");
-                }
+                currentConversation = conversationHistory[conversationHistory.Count - 1];
+            }
+            else
+            {
+                // TODO? Should we handle this differently?
+                // There are no more conversations to switch to. 
+                Console.WriteLine("No more conversations");
             }
         }
 		
@@ -44,23 +45,25 @@ namespace H1Project
         /// <param name="conversationName">The name of the conversation to print.</param>
         private void PrintConversation(string conversationName)
         {
-            List<Message> conversation = allConversations[conversationName];
-
-            // Make sure that the conversation name is actually valid
-            if (conversation != null)
+            // Test if the conversation exists
+            if (!allConversations.ContainsKey(conversationName))
             {
-                foreach (Message message in conversation) 
+                Console.WriteLine("That conversation does not exist");
+                return;
+            }
+
+            List<Message> conversation = allConversations[conversationName];
+            foreach (Message message in conversation) 
+            {
+                if (message.WasRecieved())
                 {
-                    if (message.WasRecieved())
-                    {
-                        // Commented until layout function is implemented
-                        //printRecievedMessage(message.getMessage());
-                    }
-                    else
-                    {
-                        // Commented until layout function is implemented
-                        //printSentMessage(message.getMessage());
-                    }
+                    // Commented until layout function is implemented
+                    //printRecievedMessage(message.getMessage());
+                }
+                else
+                {
+                    // Commented until layout function is implemented
+                    //printSentMessage(message.getMessage());
                 }
             }
         }		
@@ -83,7 +86,7 @@ namespace H1Project
             List<Message> conversation = new List<Message>();
             allConversations.Add(conversationName, conversation);
             currentConversation = conversationName;
-
+            conversationHistory.Add(currentConversation);
             PrintConversation(conversationName);
         }
 		
@@ -94,7 +97,29 @@ namespace H1Project
         /// <param name="filename">The filename to save the conversation to.</param>
 		private void SaveConversation(string conversationName, string filename)
         {
+            // Test if the conversation actually exists before trying to save it
+            if (!allConversations.ContainsKey(conversationName))
+            {
+                Console.WriteLine("That conversation does not exist");
+                return;
+            }
 
+            List<Message> conversation = allConversations[conversationName];
+
+            // Buffer the output, so we can write it all to the file in one go
+            string[] outputBuffer = new string[conversation.Count];
+            for (int i = 0; i < conversation.Count; i++)
+            {
+                Message message = conversation[i];
+
+                if (message.WasRecieved())
+                    outputBuffer[i] = "Other: " + message.GetMessage();
+                else
+                    outputBuffer[i] = "Me: " + message.GetMessage();
+            }
+
+            // Write the buffer 
+            System.IO.File.WriteAllLines(filename, outputBuffer);
         }
 
         /// <summary>
@@ -103,15 +128,19 @@ namespace H1Project
         /// <param name="conversationName">The name of the conversation to switch to.</param>
         private void SwitchConversation(string conversationName)
         {
+            // Test if the conversation exists
+            if (!allConversations.ContainsKey(conversationName))
+            {
+                Console.WriteLine("That conversation does not exist");
+                return;
+            }
+
             List<Message> conversation = allConversations[conversationName];
 
-            // We can only switch to conversations that exist.
-            if (conversation != null)
-            {
-                // Set the current conversation and print it to the screen
-                currentConversation = conversationName;
-                PrintConversation(conversationName);
-            }
+            // Set the current conversation and print it to the screen
+            currentConversation = conversationName;
+            conversationHistory.Add(currentConversation);
+            PrintConversation(conversationName);
         }
 
 		/// <summary>
