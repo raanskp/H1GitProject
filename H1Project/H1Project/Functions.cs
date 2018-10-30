@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace H1Project
@@ -34,6 +35,22 @@ namespace H1Project
                 // There are no more conversations to switch to. 
                 Console.WriteLine("No more conversations");
             }
+        }
+
+        /// <summary>
+        /// Deletes an old conversation from the disk.
+        /// </summary>
+        /// <param name="filename">Name of the file that contains the old conversation</param>
+        private void DeleteConversation(string filename)
+        {
+            if ( !File.Exists(filename) )
+            {
+                Console.WriteLine("That conversation does not exist.");
+                return;
+            }
+
+            File.Delete(filename);
+            Console.WriteLine("The conversation was deleted.");
         }
 		
 		/// <summary>
@@ -131,7 +148,7 @@ namespace H1Project
             }
 
             // Write the buffer 
-            System.IO.File.WriteAllLines(filename, outputBuffer);
+            File.WriteAllLines(filename, outputBuffer);
         }
 
         /// <summary>
