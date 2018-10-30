@@ -11,7 +11,7 @@ namespace H1Project
         private string currentConversation;
         private Dictionary<string, List<Message>> allConversations = new Dictionary<string, List<Message>>();
         private List<string> conversationHistory = new List<string>();
-
+		
         /// <summary>
         /// Ends a conversation by removing the reference to it in the allConversations list. 
         /// </summary>
@@ -52,8 +52,7 @@ namespace H1Project
                 return;
             }
 
-            List<Message> conversation = allConversations[conversationName];
-            foreach (Message message in conversation) 
+            foreach (Message message in allConversations[conversationName]) 
             {
                 if (message.WasRecieved())
                 {
@@ -83,8 +82,7 @@ namespace H1Project
             }
 
             // Create a new conversation, add it to the conversation list and set it active
-            List<Message> conversation = new List<Message>();
-            allConversations.Add(conversationName, conversation);
+            allConversations.Add(conversationName, new List<Message>());
             currentConversation = conversationName;
             conversationHistory.Add(currentConversation);
             PrintConversation(conversationName);
@@ -134,7 +132,8 @@ namespace H1Project
                 Console.WriteLine("That conversation does not exist");
                 return;
             }
-
+			
+	        // Variable Never Used
             List<Message> conversation = allConversations[conversationName];
 
             // Set the current conversation and print it to the screen
@@ -156,7 +155,7 @@ namespace H1Project
 		{
             // Introduction to the bot, functionality, commands, experience. - Probably redundant.
             string[] lines = System.IO.File.ReadAllLines(@"BotSvar.txt");
-            System.Console.WriteLine("Contents of BotSvar.txt =");
+            Console.WriteLine("Contents of BotSvar.txt =");
             foreach (string line in lines)
             {
                 Console.WriteLine("\t" + line);
