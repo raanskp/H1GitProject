@@ -113,8 +113,10 @@ namespace H1Project
 
 		private void Start()
 		{
-			// Introduction to the bot, functionality, commands, experience. - Probably redundant.
-		}
+            // Introduction to the bot, functionality, commands, experience. - Probably redundant.
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Claes\Documents\GitHub\H1GitProject\H1Project\H1Project\bin\Debug\BotSvar.txt");
+
+        }
 
 		public void HandleCommands(string input)
 		{
