@@ -10,17 +10,36 @@ namespace H1Project
     {
         static void Main(string[] args)
         {
-			Functions functions = new Functions();
+	        Functions functions = new Functions();
+	        bool introGiven = false;
+	        int phoneHeight = 23;
+			string line = "--------------------------------------------------------------------------------";
+			string space = "|                                                                              |";
+
 
 			while (true)
-			{
-                Console.WriteLine("Hello and welcome to this chat bot.");
-                Console.WriteLine("If you would like to chat, type Start");
-				Console.Write(">");
+	        {
+		        Console.WriteLine(line);
+		        for (int i = 0; i <= phoneHeight; i++)
+		        {
+					if (introGiven == false && i == phoneHeight)
+					{
+						GreetTheUser();
+						introGiven = true;
+					}
+					Console.WriteLine(space);
+		        }
+		        Console.WriteLine(line);
 
-                string userValue = Console.ReadLine();				
-                functions.HandleCommands(userValue);
-			}
+		        string userValue = Console.ReadLine();				
+		        functions.HandleCommands(userValue);
+	        }
         }
-    }
+
+		private static void GreetTheUser()
+		{
+			Console.WriteLine("|Hello and welcome to this chat bot.                                           |" + Environment.NewLine +
+													  "|If you would like to chat, type Start.                                        |");
+		}
+	}
 }
