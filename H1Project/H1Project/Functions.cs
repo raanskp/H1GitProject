@@ -80,17 +80,22 @@ namespace H1Project
 
             // Create a new conversation, add it to the conversation list and set it active
             allConversations.Add(conversationName, new List<Message>());
+            CommonSwitchHandler(conversationName);
+        }
+
+        private void CommonSwitchHandler(string conversationName)
+        {
             currentConversation = conversationName;
             conversationHistory.Add(currentConversation);
             PrintConversation(conversationName);
         }
-		
+
         /// <summary>
         /// Stores the given conversation to a file.
         /// </summary>
         /// <param name="conversationName">The name of the conversation to save.</param>
         /// <param name="filename">The filename to save the conversation to.</param>
-		private void SaveConversation(string conversationName, string filename)
+        private void SaveConversation(string conversationName, string filename)
         {
             // Test if the conversation actually exists before trying to save it
             if (!allConversations.ContainsKey(conversationName))
@@ -131,9 +136,7 @@ namespace H1Project
             }
 
             // Set the current conversation and print it to the screen
-            currentConversation = conversationName;
-            conversationHistory.Add(currentConversation);
-            PrintConversation(conversationName);
+            CommonSwitchHandler(conversationName);
         }
 
 		/// <summary>
@@ -157,11 +160,19 @@ namespace H1Project
             }
         }
 
-		/// <summary>
-		/// Receives the input of the user, and chooses which method to use, based on the userinput provided.
-		/// </summary>
-		/// <param name="input"></param>
-		public void HandleCommands(string input)
+        /// <summary>
+        /// Does the smalltalk
+        /// </summary>
+        private void SmallTalk()
+        {
+            //throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Receives the input of the user, and chooses which method to use, based on the userinput provided.
+        /// </summary>
+        /// <param name="input"></param>
+        public void HandleCommands(string input)
 		{
 			try
 			{
@@ -209,8 +220,8 @@ namespace H1Project
 						Quit();
 						break;
 					default:
-						SmallTalk();
-						break;
+                        SmallTalk();
+                        break;
 				}
 			}
 			catch (Exception e)
@@ -218,10 +229,5 @@ namespace H1Project
 				Console.WriteLine(e);
 			}
 		}
-
-        private void SmallTalk()
-        {
-            throw new NotImplementedException();
-        }
     }	
 }
