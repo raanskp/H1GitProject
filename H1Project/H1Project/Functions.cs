@@ -163,37 +163,44 @@ namespace H1Project
 		/// <param name="input"></param>
 		public void HandleCommands(string input)
 		{
-			string[] a = input.ToLower().Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries);
-			//Eventuelt input.Split(' ');
-			switch (a[0])
+			try
 			{
-				case "deleteconversation":
-					//DeleteConversation();
-					break;
-				case "printconversation":
-					PrintConversation(a[0]);
-					break;
-				case "startconversation":
-					StartConversation(a[0]);
-					break;
-				case "endconversation":
-					EndConversation(a[0]);
-					break;
-				case "saveconversation":
-					SaveConversation(a[0], $"{a[1]}.txt");
-					break;
-				case "switchconversation":
-					SwitchConversation(a[0]);
-					break;
-				case "start":
-					Start();
-					break;
-				case "quit":
-					Quit();
-					break;
-				default:
-					//SmallTalk();
-					break;
+				string[] a = input.ToLower().Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries);
+				
+				switch (a[0])
+				{
+					case "deleteconversation":
+						//DeleteConversation();
+						break;
+					case "printconversation":
+						PrintConversation(a[0]);
+						break;
+					case "startconversation":
+						StartConversation(a[0]);
+						break;
+					case "endconversation":
+						EndConversation(a[0]);
+						break;
+					case "saveconversation":
+						SaveConversation(a[0], $"{a[1]}.txt");
+						break;
+					case "switchconversation":
+						SwitchConversation(a[0]);
+						break;
+					case "start":
+						Start();
+						break;
+					case "quit":
+						Quit();
+						break;
+					default:
+						//SmallTalk();
+						break;
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
 			}
 		}
 	}	
