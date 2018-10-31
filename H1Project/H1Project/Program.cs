@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace H1Project
 {
@@ -11,35 +7,40 @@ namespace H1Project
         static void Main(string[] args)
         {
 	        Functions functions = new Functions();
-	        bool introGiven = false;
-	        int phoneHeight = 23;
-			string line = "--------------------------------------------------------------------------------";
-			string space = "|                                                                              |";
 
-
+			
 			while (true)
 	        {
-		        Console.WriteLine(line);
-		        for (int i = 0; i <= phoneHeight; i++)
-		        {
-					if (introGiven == false && i == phoneHeight)
-					{
-						GreetTheUser();
-						introGiven = true;
-					}
-					Console.WriteLine(space);
-		        }
-		        Console.WriteLine(line);
+				ClearAndDraw();
 
 		        string userValue = Console.ReadLine();				
 		        functions.HandleCommands(userValue);
 	        }
         }
 
-		private static void GreetTheUser()
+		private static void ClearAndDraw()
+		{
+			int height = 23;
+			int width = 80;
+			string line = "--------------------------------------------------------------------------------";
+			Console.Clear();
+			Console.SetCursorPosition(0, 0);
+			Console.WriteLine(line);
+			for (int i = 0; i < height; i++)
+			{
+				Console.SetCursorPosition(0, i);
+				Console.Write("|");
+				Console.SetCursorPosition(width, i);
+				Console.Write("|");
+			}
+			
+			Console.WriteLine(Environment.NewLine + line);
+		}
+
+		private static void Greet()
 		{
 			Console.WriteLine("|Hello and welcome to this chat bot.                                           |" + Environment.NewLine +
-													  "|If you would like to chat, type Start.                                        |");
+							  "|If you would like to chat, type Start.                                        |");
 		}
 	}
 }
