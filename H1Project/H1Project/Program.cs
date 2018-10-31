@@ -11,19 +11,19 @@ namespace H1Project
 			
 			while (true)
 	        {
-				ClearAndDraw();
+				DrawLayout();
 
 		        string userValue = Console.ReadLine();				
 		        functions.HandleCommands(userValue);
-	        }
+				Console.Clear();
+			}
         }
 
-		private static void ClearAndDraw()
+		private static void DrawLayout()
 		{
 			int height = 23;
 			int width = 80;
 			string line = "--------------------------------------------------------------------------------";
-			Console.Clear();
 			Console.SetCursorPosition(0, 0);
 			Console.WriteLine(line);
 			for (int i = 0; i < height; i++)
