@@ -14,7 +14,6 @@ namespace H1Project
 			while (true)
 	        {
 				DrawLayout();
-
 		        string userValue = Console.ReadLine();				
 		        functions.HandleCommands(userValue);
 				Console.Clear();
@@ -45,10 +44,15 @@ namespace H1Project
 				Console.Write("|");
 				Console.SetCursorPosition(width, i);
 				Console.Write("|");
-			}
-			
+			}			
 			Console.WriteLine(Environment.NewLine + line);
-            Console.WriteLine("Error: " + functions.GetLastError());
+			 string errorIndicator = "Error: " + functions.GetLastError();
+
+			if (errorIndicator != "Error: " || errorIndicator == "Error: No more conversations")
+			{
+				Console.WriteLine(errorIndicator);
+			}
+
 		}
 
 		private static void Greet()
