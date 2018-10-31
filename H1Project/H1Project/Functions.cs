@@ -6,12 +6,23 @@ namespace H1Project
 {
 	public class Functions
 	{
-        private string currentConversation;
-        private Dictionary<string, List<Message>> allConversations = new Dictionary<string, List<Message>>();
-        private List<string> conversationHistory = new List<string>();
+        // An array of strings loaded from the "BotSvar.txt" file. Represents all the answers that the bot can give to the user.
         private string[] botAnswers;
-        private Random random = new Random((int)(DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond));
+
+        // The current active conversation. Might be null if there is no active conversation
+        private string currentConversation;
+
+        // All the conversations. Use a conversation name to get that specific conversation.
+        private Dictionary<string, List<Message>> allConversations = new Dictionary<string, List<Message>>();
+
+        // Conversation history queue. Used to keep track of the order when conversations were opened. 
+        private List<string> conversationHistory = new List<string>();
+        
+        // Holds error messages that can be used in the main layout function to indicate to the user that something went wrong.
         private string lastError;
+
+        // Random number generator for all your number generation needs
+        private Random random = new Random((int)(DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond));       
 
         /// <summary>
         /// Ends a conversation by removing the reference to it in the allConversations list. 
@@ -23,12 +34,13 @@ namespace H1Project
             if (!allConversations.ContainsKey(conversationName))
             {
 				lastError = "That conversation does not exist";
-                //Console.WriteLine("That conversation does not exist");
                 return;
             }
 
+            
             conversationHistory.Remove(conversationName);
             allConversations.Remove(conversationName);
+
             // If we previously switched from a conversation to this one, we can switch back
             if (conversationHistory.Count > 0)
             {
@@ -41,10 +53,13 @@ namespace H1Project
 				currentConversation = null;
 
 				lastError = "No more conversations";
-				//Console.WriteLine("No more conversations");
             }
         }
 
+        /// <summary>
+        /// Returns the latest error that happened. 
+        /// </summary>
+        /// <returns>The message of the latest error.</returns>
         public string GetLastError()
         {
             return lastError == null ? "" : lastError;
@@ -63,7 +78,6 @@ namespace H1Project
             }
 
             File.Delete(filename);
-            //Console.WriteLine("The conversation was deleted.");
         }
 		
 		/// <summary>
@@ -106,11 +120,21 @@ namespace H1Project
                 return allConversations[currentConversation];
         }
 
+        /// <summary>
+        /// Prints the message in a fashion that indicates it was a message sent by the user.
+        /// /// FIXME? Unneeded now together with PrintConversation?
+        /// </summary>
+        /// <param name="message">The message that was sent.</param>
         private void PrintSentMessage(string message)
         {
             Console.WriteLine(message);
         }
 
+        /// <summary>
+        /// Prints the message in a fashion that indicates it was a message recieved by the user.
+        /// /// FIXME? Unneeded now together with PrintConversation?
+        /// </summary>
+        /// <param name="message">The message that was recieved.</param>
         private void PrintRecievedMessage(string message)
         {
             Console.WriteLine(message);
@@ -135,6 +159,10 @@ namespace H1Project
             CommonSwitchHandler(conversationName);
         }
 
+        /// <summary>
+        /// Command handler function to be used when switching between conversations.
+        /// </summary>
+        /// <param name="conversationName">The name of the conversation to switch to. </param>
         private void CommonSwitchHandler(string conversationName)
         {
             currentConversation = conversationName;
@@ -208,17 +236,11 @@ namespace H1Project
 		/// </summary>
 		public void Start()
 		{
-            //Console.WriteLine("Contents of BotSvar.txt =");
-            foreach (string line in System.IO.File.ReadAllLines(@"BotSvar.txt"))
-            {
-                //Console.WriteLine("\t" + line);
-            }
-
             botAnswers = File.ReadAllLines(@"BotSvar.txt");
         }
 
         /// <summary>
-        /// Does the smalltalk
+        /// Does the smalltalk.
         /// </summary>
         private void SmallTalk()
         {
@@ -231,6 +253,7 @@ namespace H1Project
         /// <param name="input"></param>
         public void HandleCommands(string input)
 		{
+            // Clear any old error messages.
             lastError = "";
 
 			try
@@ -240,9 +263,12 @@ namespace H1Project
 				switch (a[0])
 				{
 					case "deleteconversation":
-						//DeleteConversation();
-						break;
-					case "printconversation":
+                        if (a.Length >= 2)
+                            DeleteConversation(a[1]);
+                        else
+                            lastError = "Deleteconversation <conversation name>";
+                        break;
+                    case "printconversation":
                         if (a.Length >= 2)
 						    PrintConversation(a[1]);
                         else
