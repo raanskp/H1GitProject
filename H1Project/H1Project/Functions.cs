@@ -312,20 +312,32 @@ namespace H1Project
 						{
 							case "+":
 								result = (firstValue + secondValue).ToString();
-								GetCurrentConversation().Add(new Message(result));
+								GetCurrentConversation().Add(new Message(input));
+								GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
 								break;
 							case "-":
 								result = (firstValue - secondValue).ToString();
-								GetCurrentConversation().Add(new Message(result));
-								break;
+                                GetCurrentConversation().Add(new Message(input));
+                                GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
+                                break;
 							case "*":
 								result = (firstValue * secondValue).ToString();
-								GetCurrentConversation().Add(new Message(result));
-								break;
+                                GetCurrentConversation().Add(new Message(input));
+                                GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
+                                break;
 							case "/":
-								result = (firstValue / secondValue).ToString();
-								GetCurrentConversation().Add(new Message(result));
-								break;
+                                if ( secondValue == 0 )
+                                {
+                                    GetCurrentConversation().Add(new Message(input));
+                                    GetCurrentConversation().Add(new Message("No lollygaggin'.", true));
+                                }
+                                else
+                                {
+                                    result = (firstValue / secondValue).ToString();
+                                    GetCurrentConversation().Add(new Message(input));
+                                    GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
+                                }
+                                break;
 							default:
 								break;
 						}
