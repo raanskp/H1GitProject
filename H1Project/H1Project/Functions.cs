@@ -242,9 +242,14 @@ namespace H1Project
         /// <summary>
         /// Does the smalltalk.
         /// </summary>
-        private void SmallTalk()
+        private void SmallTalk(bool isQuestion)
         {
-            GetCurrentConversation().Add(new Message(botAnswers[random.Next(botAnswers.Length)],true));
+            string answer = botAnswers[random.Next(botAnswers.Length)];
+            while (isQuestion && answer.EndsWith("?")){
+                answer = botAnswers[random.Next(botAnswers.Length)];
+            }
+
+            GetCurrentConversation().Add(new Message(answer,true));
         }
 
         /// <summary>
@@ -340,7 +345,7 @@ namespace H1Project
                         else
                         {
                             GetCurrentConversation().Add(new Message(input));
-                            SmallTalk();
+                            SmallTalk(input.EndsWith("?"));
                             PrintConversation(currentConversation);
                         }
                         break;
