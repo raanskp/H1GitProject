@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace H1Project
 {
-    class Message
+    public class Message
     {
         string message;
         bool isRecieved;

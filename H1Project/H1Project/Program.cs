@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace H1Project
 {
     class Program
     {
+        private static Functions functions = new Functions();
+
         static void Main(string[] args)
         {
-	        Functions functions = new Functions();
+            functions.Start();
 
-			
 			while (true)
 	        {
 				DrawLayout();
@@ -21,9 +23,20 @@ namespace H1Project
 
 		private static void DrawLayout()
 		{
+            List<Message> conversation = functions.GetCurrentConversation();
+
+            Console.WriteLine();
+            foreach (Message message in conversation)
+            {
+                if (message.WasRecieved())
+                    Console.WriteLine(" "+message.GetMessage().PadLeft(78));
+                else
+                    Console.WriteLine(" "+message.GetMessage());
+            }
+
 			int height = 23;
 			int width = 80;
-			string line = "--------------------------------------------------------------------------------";
+            string line = "--------------------------------------------------------------------------------";
 			Console.SetCursorPosition(0, 0);
 			Console.WriteLine(line);
 			for (int i = 0; i < height; i++)
@@ -35,6 +48,7 @@ namespace H1Project
 			}
 			
 			Console.WriteLine(Environment.NewLine + line);
+            Console.WriteLine("Error: " + functions.GetLastError());
 		}
 
 		private static void Greet()

@@ -9,7 +9,10 @@ namespace H1Project
         private string currentConversation;
         private Dictionary<string, List<Message>> allConversations = new Dictionary<string, List<Message>>();
         private List<string> conversationHistory = new List<string>();
-		
+        private string[] botAnswers;
+        private Random random = new Random((int)(DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond));
+        private string lastError;
+
         /// <summary>
         /// Ends a conversation by removing the reference to it in the allConversations list. 
         /// </summary>
@@ -35,6 +38,11 @@ namespace H1Project
                 // There are no more conversations to switch to. 
                 Console.WriteLine("No more conversations");
             }
+        }
+
+        public string GetLastError()
+        {
+            return lastError == null ? "" : lastError;
         }
 
         /// <summary>
@@ -71,12 +79,12 @@ namespace H1Project
                 if (message.WasRecieved())
                 {
                     // Commented until layout function is implemented
-                    //printRecievedMessage(message.getMessage());
+                    PrintRecievedMessage(message.GetMessage());
                 }
                 else
                 {
                     // Commented until layout function is implemented
-                    //printSentMessage(message.getMessage());
+                    PrintSentMessage(message.GetMessage());
                 }
             }
         }		
@@ -85,15 +93,25 @@ namespace H1Project
         /// Fetches the list of messages that is the current conversation.
         /// </summary>
         /// <returns>A list that is the current conversation or null if there is no active conversation</returns>
-        private List<Message> GetCurrentConversation()
+        public List<Message> GetCurrentConversation()
         {
             if (currentConversation == null)
-                return null;
+                return new List<Message>();
             else
                 return allConversations[currentConversation];
         }
 
-		/// <summary>
+        private void PrintSentMessage(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        private void PrintRecievedMessage(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        /// <summary>
         /// This function starts a conversation by creating a new List<Message> to contain all the messages sent/recieved.
         /// If a conversation already exists, it will switch to that conversation instead. 
         /// </summary>
@@ -180,13 +198,15 @@ namespace H1Project
 		/// <summary>
 		/// Introduction to the bot, functionality, commands, experience. - Probably redundant.
 		/// </summary>
-		private void Start()
+		public void Start()
 		{
             Console.WriteLine("Contents of BotSvar.txt =");
             foreach (string line in System.IO.File.ReadAllLines(@"BotSvar.txt"))
             {
-                Console.WriteLine("\t" + line);
+                //Console.WriteLine("\t" + line);
             }
+
+            botAnswers = File.ReadAllLines(@"BotSvar.txt");
         }
 
         /// <summary>
@@ -194,7 +214,7 @@ namespace H1Project
         /// </summary>
         private void SmallTalk()
         {
-            //throw new NotImplementedException();
+            GetCurrentConversation().Add(new Message(botAnswers[random.Next(botAnswers.Length)],true));
         }
 
         /// <summary>
@@ -203,6 +223,8 @@ namespace H1Project
         /// <param name="input"></param>
         public void HandleCommands(string input)
 		{
+            lastError = "";
+
 			try
 			{
 				string[] a = input.ToLower().Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries);
@@ -213,7 +235,7 @@ namespace H1Project
 						//DeleteConversation();
 						break;
 					case "printconversation":
-                        if ( a.Length >= 2 )
+                        if (a.Length >= 2)
 						    PrintConversation(a[1]);
                         else
                             Console.WriteLine("Printconversation <conversation name>");
@@ -249,7 +271,16 @@ namespace H1Project
 						Quit();
 						break;
 					default:
-                        SmallTalk();
+                        if (currentConversation == null)
+                        {
+                            lastError = "No current conversation. To start a conversation use startconversation";
+                        }
+                        else
+                        {
+                            GetCurrentConversation().Add(new Message(input));
+                            SmallTalk();
+                            PrintConversation(currentConversation);
+                        }
                         break;
 				}
 			}
