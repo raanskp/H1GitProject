@@ -298,6 +298,34 @@ namespace H1Project
                         else
                             lastError = "switchconversation <conversation name>";
                         break;
+					case "calculate":
+						float.TryParse(a[1], out float firstValue);
+						float.TryParse(a[3], out float secondValue);
+						string result;
+
+						switch (a[2])
+						{
+							case "+":
+								result = (firstValue + secondValue).ToString();
+								GetCurrentConversation().Add(new Message(result));
+								break;
+							case "-":
+								result = (firstValue - secondValue).ToString();
+								GetCurrentConversation().Add(new Message(result));
+								break;
+							case "*":
+								result = (firstValue * secondValue).ToString();
+								GetCurrentConversation().Add(new Message(result));
+								break;
+							case "/":
+								result = (firstValue / secondValue).ToString();
+								GetCurrentConversation().Add(new Message(result));
+								break;
+							default:
+								break;
+						}
+
+						break;
                     case "start":
                         Start();
 						break;
