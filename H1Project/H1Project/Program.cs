@@ -24,14 +24,40 @@ namespace H1Project
 		private static void DrawLayout()
 		{
             List<Message> conversation = functions.GetCurrentConversation();
+            List<string> buffer = new List<string>();
 
-            Console.WriteLine();
+            buffer.Add(Environment.NewLine);
             foreach (Message message in conversation)
             {
                 if (message.WasRecieved())
-                    Console.WriteLine(" "+message.GetMessage().PadLeft(78));
+                {
+                    string leftoverMessage = message.GetMessage();
+                    while ( leftoverMessage.Length >= 40 )
+                    {
+                        string part = leftoverMessage.Substring(0, 40);
+                        buffer.Add(" " + part.PadLeft(78));
+                        leftoverMessage = leftoverMessage.Substring(40);
+                    }
+                    buffer.Add(" " + leftoverMessage.PadLeft(78));
+                }
                 else
-                    Console.WriteLine(" "+message.GetMessage());
+                {
+                    string leftoverMessage = message.GetMessage();
+                    while (leftoverMessage.Length >= 40)
+                    {
+                        string part = leftoverMessage.Substring(0, 40);
+                        buffer.Add(" " + part);
+                        leftoverMessage = leftoverMessage.Substring(40);
+                    }
+                    buffer.Add(" " + leftoverMessage);
+                }
+            }
+
+            int startIndex = buffer.Count > 23 ? buffer.Count - 23: 0;
+
+            for ( int i = startIndex; i < buffer.Count; i++ )
+            {
+                Console.WriteLine(buffer[i]);
             }
 
 			int height = 23;
