@@ -23,11 +23,12 @@ namespace H1Project
             if (!allConversations.ContainsKey(conversationName))
             {
 				lastError = "That conversation does not exist";
-                Console.WriteLine("That conversation does not exist");
+                //Console.WriteLine("That conversation does not exist");
                 return;
             }
 
-            conversationHistory.Remove(currentConversation);
+            conversationHistory.Remove(conversationName);
+            allConversations.Remove(conversationName);
             // If we previously switched from a conversation to this one, we can switch back
             if (conversationHistory.Count > 0)
             {
@@ -40,7 +41,7 @@ namespace H1Project
 				currentConversation = null;
 
 				lastError = "No more conversations";
-				Console.WriteLine("No more conversations");
+				//Console.WriteLine("No more conversations");
             }
         }
 
@@ -57,16 +58,16 @@ namespace H1Project
         {
             if ( !File.Exists(filename) )
             {
-                Console.WriteLine("That conversation does not exist.");
+                lastError = "That conversation does not exist.";
                 return;
             }
 
             File.Delete(filename);
-            Console.WriteLine("The conversation was deleted.");
+            //Console.WriteLine("The conversation was deleted.");
         }
 		
 		/// <summary>
-        /// Prints a conversation to the console.
+        /// Prints a conversation to the console. FIXME? Unneeded now?
         /// </summary>
         /// <param name="conversationName">The name of the conversation to print.</param>
         private void PrintConversation(string conversationName)
@@ -83,12 +84,12 @@ namespace H1Project
                 if (message.WasRecieved())
                 {
                     // Commented until layout function is implemented
-                    PrintRecievedMessage(message.GetMessage());
+                    //PrintRecievedMessage(message.GetMessage());
                 }
                 else
                 {
                     // Commented until layout function is implemented
-                    PrintSentMessage(message.GetMessage());
+                    //PrintSentMessage(message.GetMessage());
                 }
             }
         }		
@@ -137,7 +138,10 @@ namespace H1Project
         private void CommonSwitchHandler(string conversationName)
         {
             currentConversation = conversationName;
-            conversationHistory.Add(currentConversation);
+            if (!conversationHistory.Contains(currentConversation))
+            {
+                conversationHistory.Add(currentConversation);
+            }
             PrintConversation(conversationName);
         }
 
@@ -151,7 +155,7 @@ namespace H1Project
             // Test if the conversation actually exists before trying to save it
             if (!allConversations.ContainsKey(conversationName))
             {
-                Console.WriteLine("That conversation does not exist");
+                lastError = "That conversation does not exist";
                 return;
             }
 
@@ -182,7 +186,7 @@ namespace H1Project
             // Test if the conversation exists
             if (!allConversations.ContainsKey(conversationName))
             {
-                Console.WriteLine("That conversation does not exist");
+                lastError = "That conversation does not exist";
                 return;
             }
 
@@ -204,7 +208,7 @@ namespace H1Project
 		/// </summary>
 		public void Start()
 		{
-            Console.WriteLine("Contents of BotSvar.txt =");
+            //Console.WriteLine("Contents of BotSvar.txt =");
             foreach (string line in System.IO.File.ReadAllLines(@"BotSvar.txt"))
             {
                 //Console.WriteLine("\t" + line);
@@ -242,34 +246,34 @@ namespace H1Project
                         if (a.Length >= 2)
 						    PrintConversation(a[1]);
                         else
-                            Console.WriteLine("Printconversation <conversation name>");
+                            lastError = "Printconversation <conversation name>";
 						break;
 					case "startconversation":
                         if (a.Length >= 2)
                             StartConversation(a[1]);
                         else
-                            Console.WriteLine("StartConversation <conversation name>");
+                            lastError = "StartConversation <conversation name>";
 						break;
 					case "endconversation":
                         if (a.Length >= 2)
                             EndConversation(a[1]);
                         else
-                            Console.WriteLine("EndConversation <conversation name>");
+                            lastError = "EndConversation <conversation name>";
 						break;
 					case "saveconversation":
                         if (a.Length >= 3)
                             SaveConversation(a[1], $"{a[2]}.txt");
                         else
-                            Console.WriteLine("SaveConversation <conversation name> <filename>");
+                            lastError = "SaveConversation <conversation name> <filename>";
                         break;
 					case "switchconversation":
-                        if (a.Length >= 3)
+                        if (a.Length >= 2)
                             SwitchConversation(a[1]);
                         else
-                            Console.WriteLine("switchconversation <conversation name>");
+                            lastError = "switchconversation <conversation name>";
                         break;
                     case "start":
-						Start();
+                        Start();
 						break;
 					case "quit":
 						Quit();
