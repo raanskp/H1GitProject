@@ -22,6 +22,7 @@ namespace H1Project
             // Test if the conversation exists
             if (!allConversations.ContainsKey(conversationName))
             {
+				lastError = "That conversation does not exist";
                 Console.WriteLine("That conversation does not exist");
                 return;
             }
@@ -34,9 +35,12 @@ namespace H1Project
             }
             else
             {
-                // TODO? Should we handle this differently?
-                // There are no more conversations to switch to. 
-                Console.WriteLine("No more conversations");
+				// TODO? Should we handle this differently?
+				// There are no more conversations to switch to. 
+				currentConversation = null;
+
+				lastError = "No more conversations";
+				Console.WriteLine("No more conversations");
             }
         }
 
