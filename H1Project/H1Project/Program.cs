@@ -11,7 +11,7 @@ namespace H1Project
 
 		static void Main(string[] args)
         {
-            functions.Start();
+            //functions.Start();
 
 			while (true)
 	        {
@@ -57,7 +57,7 @@ namespace H1Project
 				}
 			}
 
-			for (int i = buffer.Count > height ? buffer.Count - height : 0; i < buffer.Count; i++)
+			for (int i = buffer.Count > height ? buffer.Count - height + 1 : 0; i < buffer.Count; i++)
 			{
 				Console.WriteLine(buffer[i]);
 			}
