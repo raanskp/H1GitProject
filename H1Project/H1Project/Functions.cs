@@ -7,7 +7,7 @@ namespace H1Project
 	public class Functions
 	{
         // An array of strings loaded from the "BotSvar.txt" file. Represents all the answers that the bot can give to the user.
-        private string[] botAnswers;
+        private string[] botAnswers = File.ReadAllLines(@"BotSvar.txt");
 
         // The current active conversation. Might be null if there is no active conversation
         private string currentConversation;
@@ -227,17 +227,9 @@ namespace H1Project
 		/// </summary>
 		private void Quit()
 		{
-            Console.WriteLine("Good bye, have a nice day");
+			Console.WriteLine("Good bye, have a nice day");
 			Environment.Exit(0);
 		}
-
-		/// <summary>
-		/// Introduction to the bot, functionality, commands, experience. - Probably redundant.
-		/// </summary>
-		public void Start()
-		{
-            botAnswers = File.ReadAllLines(@"BotSvar.txt");
-        }
 
         /// <summary>
         /// Does the smalltalk.
@@ -252,11 +244,57 @@ namespace H1Project
             GetCurrentConversation().Add(new Message(answer,true));
         }
 
-        /// <summary>
-        /// Receives the input of the user, and chooses which method to use, based on the userinput provided.
-        /// </summary>
-        /// <param name="input"></param>
-        public void HandleCommands(string input)
+		/// <summary>
+		/// Provides a result, based on the userinput
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="a"></param>
+		private void Calculate(string input, string[] a)
+		{
+			float.TryParse(a[1], out float firstValue);
+			float.TryParse(a[3], out float secondValue);
+			string result;
+
+			switch (a[2])
+			{
+				case "+":
+					result = (firstValue + secondValue).ToString();
+					GetCurrentConversation().Add(new Message(input));
+					GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
+					break;
+				case "-":
+					result = (firstValue - secondValue).ToString();
+					GetCurrentConversation().Add(new Message(input));
+					GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
+					break;
+				case "*":
+					result = (firstValue * secondValue).ToString();
+					GetCurrentConversation().Add(new Message(input));
+					GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
+					break;
+				case "/":
+					if (secondValue == 0)
+					{
+						GetCurrentConversation().Add(new Message(input));
+						GetCurrentConversation().Add(new Message("No lollygaggin'.", true));
+					}
+					else
+					{
+						result = (firstValue / secondValue).ToString();
+						GetCurrentConversation().Add(new Message(input));
+						GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
+					}
+					break;
+				default:
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Receives the input of the user, and chooses which method to use, based on the userinput provided.
+		/// </summary>
+		/// <param name="input"></param>
+		public void HandleCommands(string input)
 		{
             // Clear any old error messages.
             lastError = "";
@@ -304,47 +342,7 @@ namespace H1Project
                             lastError = "switchconversation <conversation name>";
                         break;
 					case "calculate":
-						float.TryParse(a[1], out float firstValue);
-						float.TryParse(a[3], out float secondValue);
-						string result;
-
-						switch (a[2])
-						{
-							case "+":
-								result = (firstValue + secondValue).ToString();
-								GetCurrentConversation().Add(new Message(input));
-								GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
-								break;
-							case "-":
-								result = (firstValue - secondValue).ToString();
-                                GetCurrentConversation().Add(new Message(input));
-                                GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
-                                break;
-							case "*":
-								result = (firstValue * secondValue).ToString();
-                                GetCurrentConversation().Add(new Message(input));
-                                GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
-                                break;
-							case "/":
-                                if ( secondValue == 0 )
-                                {
-                                    GetCurrentConversation().Add(new Message(input));
-                                    GetCurrentConversation().Add(new Message("No lollygaggin'.", true));
-                                }
-                                else
-                                {
-                                    result = (firstValue / secondValue).ToString();
-                                    GetCurrentConversation().Add(new Message(input));
-                                    GetCurrentConversation().Add(new Message("Citizen, your result is: " + result, true));
-                                }
-                                break;
-							default:
-								break;
-						}
-
-						break;
-                    case "start":
-                        Start();
+						Calculate(input, a);
 						break;
 					case "quit":
 						Quit();
@@ -367,6 +365,6 @@ namespace H1Project
 			{
 				Console.WriteLine(e);
 			}
-		}
-    }	
+		}		
+	}	
 }
