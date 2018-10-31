@@ -46,7 +46,7 @@ namespace H1Project
 				Console.Write("|");
 			}			
 			Console.WriteLine(Environment.NewLine + line);
-			 string errorIndicator = "Error: " + functions.GetLastError();
+			string errorIndicator = "Error: " + functions.GetLastError();
 
 			if (errorIndicator != "Error: " || errorIndicator == "Error: No more conversations")
 			{
