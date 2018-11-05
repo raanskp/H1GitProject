@@ -11,8 +11,6 @@ namespace H1Project
 
 		static void Main(string[] args)
         {
-            //functions.Start();
-
 			while (true)
 	        {
 				DrawLayout(height, width);

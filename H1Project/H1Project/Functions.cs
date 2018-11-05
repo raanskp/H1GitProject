@@ -245,7 +245,7 @@ namespace H1Project
         }
 
 		/// <summary>
-		/// Provides a result, based on the userinput
+		/// Provides a result, based on the userinput, calculations.
 		/// </summary>
 		/// <param name="input"></param>
 		/// <param name="a"></param>
